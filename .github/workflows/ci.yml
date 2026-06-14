@@ -32,6 +32,21 @@ jobs:
       - name: Type check
         run: pnpm exec turbo check-types --filter=web
 
+      - name: Create minimal .env.local for web build (real secrets are only needed at runtime)
+        run: |
+          mkdir -p apps/web
+          cat > apps/web/.env.local << 'EOF'
+          # These are build-time dummies only.
+          # They satisfy the top-level checks in lib/auth.ts and lib/supabase/*.
+          # Real values must come from the deployment platform (Vercel, etc.).
+          AUTH_SECRET=build-time-dummy-secret-do-not-use-in-prod
+          AUTH_TWITTER_ID=build-dummy
+          AUTH_TWITTER_SECRET=build-dummy
+          NEXT_PUBLIC_SUPABASE_URL=https://dummy.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy-for-build-only
+          SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy-service-role-for-build-only
+          EOF
+
       - name: Build web
         run: pnpm exec turbo build --filter=web
 

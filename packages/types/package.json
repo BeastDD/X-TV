@@ -10,5 +10,12 @@
   },
   "scripts": {
     "build": "echo 'types package placeholder'"
+  },
+  "turbo": {
+    "tasks": {
+      "build": {
+        "outputs": []
+      }
+    }
   }
 }

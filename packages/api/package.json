@@ -12,5 +12,12 @@
     "build": "echo 'api package placeholder (real X client + curation jobs in Sprint 1)'"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {},
+  "turbo": {
+    "tasks": {
+      "build": {
+        "outputs": []
+      }
+    }
+  }
 }

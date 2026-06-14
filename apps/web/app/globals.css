@@ -1,25 +1,13 @@
-@import 'tailwindcss';
-
-@theme inline {
-  --color-background: #000000;
-  --color-foreground: #ffffff;
-  --color-primary: #ff0033;
-  --color-accent: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff00ff);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  background: #000;
-  color: white;
-  font-family: 'Geist Sans', system-ui, sans-serif;
+  background-color: #000;
 }
 
-/* Neon glows */
-.neon-glow {
-  box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
-}
-
-/* More styles for TV */
-.tv-player {
-  aspect-ratio: 16 / 9;
-  background: #111;
+/* Neon rainbow accents */
+.neon-rainbow {
+  border-image: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff0000) 1;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
 }

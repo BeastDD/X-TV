@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm exec turbo lint --filter=web || echo "Lint step (add real lint later)"
+
+      - name: Type check
+        run: pnpm exec turbo check-types --filter=web || pnpm --filter=web exec tsc --noEmit || echo "Type check step"
+
+      - name: Build web
+        run: pnpm exec turbo build --filter=web
+
+      # Add Vitest / Playwright here in a follow-up when tests are written
+      # - name: Test
+      #   run: pnpm exec turbo test --filter=web

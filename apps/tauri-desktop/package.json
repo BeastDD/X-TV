@@ -1,0 +1,9 @@
+{
+  "name": "tauri-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tauri desktop app placeholder — full Tauri init, Rust, native features and build in Sprint 4",
+  "scripts": {
+    "build": "echo 'Tauri placeholder — full implementation (tauri init, src-tauri, desktop builds) deferred to Sprint 4'"
+  }
+}

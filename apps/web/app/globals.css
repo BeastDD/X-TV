@@ -1,19 +1,25 @@
 @import 'tailwindcss';
 
-@theme {
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
   --color-primary: #ff0033;
-  --color-neon-purple: #a855f7;
-  --color-neon-cyan: #22d3ee;
-  --color-neon-pink: #ec4899;
-  --color-neon-red: #ef4444;
+  --color-accent: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff00ff);
 }
 
 body {
+  background: #000;
+  color: white;
   font-family: 'Geist Sans', system-ui, sans-serif;
 }
 
-.tv-player {
-  background: #000;
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.3), 0 0 60px rgba(34, 211, 238, 0.2);
+/* Neon glows */
+.neon-glow {
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
 }
-/* Add more neon glows, fade controls etc. */
+
+/* More styles for TV */
+.tv-player {
+  aspect-ratio: 16 / 9;
+  background: #111;
+}

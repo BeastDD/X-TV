@@ -1,0 +1,39 @@
+/* Obsidian Neon TV - Cyber Minimalist with Rainbow Accents */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-purple: #a855f7;
+  --neon-cyan: #22d3ee;
+  --neon-magenta: #ec4899;
+  --neon-red: #ef4444;
+}
+
+body {
+  background: #000;
+  color: white;
+  font-family: 'Geist Sans', system-ui, sans-serif;
+}
+
+/* Neon glow effects */
+.neon-glow {
+  box-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-cyan);
+}
+
+.channel-item:hover {
+  border-color: var(--neon-magenta);
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+/* TV Player styles */
+.tv-player {
+  position: relative;
+  background: #000;
+}
+
+.control-bar {
+  transition: opacity 0.3s ease;
+}
+
+/* More refined styles for landing and tv */

@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+/* global process */
 import withPWAInit from "next-pwa";
 
 const withPWA = withPWAInit({

@@ -1,4 +1,4 @@
-import type { XUser } from 'types';
+import type { XUser } from '@repo/types';
 import { createServiceRoleClient } from './server';
 
 /**

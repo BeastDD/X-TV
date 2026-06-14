@@ -14,7 +14,7 @@ This is a concise record of the work performed to complete the foundation descri
 **Phase 2 — Next.js + UI Foundation**
 - Installed Tailwind v4 + PostCSS companion, shadcn/ui (base-nova style), and all listed deps: next-pwa, next-auth, framer-motion, zustand, @tanstack/react-query, lucide-react, @supabase/supabase-js
 - Added `@/*` path alias + Tailwind/PostCSS configs so shadcn validated cleanly
-- Created `/tv` route stub + completely replaced the demo landing page with a clean, on-brand X TV hero + 7-channel teaser using shadcn components
+- Created functional landing page (hero + 7-channel teaser cards using demo data + SignInButton) + working `/tv` shell (sidebar channel list + clickable switching + video player) using the existing tv-data + shadcn-style components
 - next-pwa configured (conditionally applied only on production builds to avoid Turbopack conflicts in Next 16)
 
 **Phase 3 — Supabase (critical user request)**
@@ -46,12 +46,12 @@ This is a concise record of the work performed to complete the foundation descri
 4. Open http://localhost:3000
 5. Click any "Sign in with X"
 6. Complete OAuth with your test account
-7. You should land on `/tv` (the 7 channel cards are visible)
+7. You should land on `/tv` (the 7 channel list/sidebar is visible; clicking switches the playing video clip)
 8. Check your Supabase Table Editor → `users` table — a new row should exist.
 
 ## Remaining / Polish Items (easy follow-ups)
 
-- Full TV shell (Phase 5): Zustand store, real keyboard handlers, Big Buck Bunny `<video>`, dark cinematic styling, channel switching that actually affects the player area, fullscreen API, overlays.
+- TV polish (future): Zustand store for state, real keyboard/remote handlers, fullscreen API, overlays, seamless infinite behavior, Big Buck Bunny (or X-sourced) production clips. (Basic channel list + switching + player now implemented for Sprint 0.)
 - Husky + commitlint (Phase 1 item that was deprioritized for speed).
 - Vitest + basic Playwright smoke tests (landing + redirect behavior).
 - Expand CI (add the test jobs, cache, etc.).

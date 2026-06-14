@@ -26,13 +26,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm exec turbo lint --filter=web || echo "Lint step (add real lint later)"
+        run: pnpm exec turbo lint --filter=web
 
       - name: Type check
-        run: pnpm exec turbo check-types --filter=web || pnpm --filter=web exec tsc --noEmit || echo "Type check step"
+        run: pnpm exec turbo check-types --filter=web
 
       - name: Build web
         run: pnpm exec turbo build --filter=web
+
+      # Lint and typecheck are now strict (no fallbacks). They will fail the job on errors.
+      # Tests (Vitest/Playwright) deferred to later sprints.
 
       # Add Vitest / Playwright here in a follow-up when tests are written
       # - name: Test

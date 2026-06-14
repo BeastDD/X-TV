@@ -20,9 +20,9 @@ This is the monorepo (Turborepo + pnpm) for the project.
   - Correct callback: `/api/auth/callback/twitter`
   - Middleware protection for `/tv`
   - Automatic sync of X profile → Supabase `users` table on first login
-- Basic TV UI shell route (`/tv`) + clean landing page with channel teaser
+- Landing page with X TV hero + 7-channel teaser cards (using demo data) + functional protected `/tv` shell with sidebar channel switching and HTML5 video player
 - PWA support via next-pwa (manifest + service worker on production builds)
-- Working `pnpm dev` and production build for the web app
+- Working `pnpm dev` and production build for the web app (full happy-path Quick Start now matches docs)
 
 **Next**: Sprint 1 (real X API client, channel curation jobs, direct video playback).
 
@@ -44,11 +44,14 @@ pnpm install
 ```
 
 **2. Set up your local secrets (the most important step)**
+Follow the authoritative copy + fill instructions inside `.env.example` (it strongly recommends placing the file at `apps/web/.env.local` because `pnpm --filter=web` loads env relative to the web app).
+
+Example (see `.env.example` comments for the exact recommended flow):
 ```pwsh
-cp .env.example .env.local
+cp .env.example apps/web/.env.local
 ```
 
-Open `.env.local` and fill the values. The file itself contains **very detailed novice instructions** (exact callback URL, how to generate `AUTH_SECRET`, which scopes to request in the X portal, etc.).
+Open `apps/web/.env.local` and fill the values. The `.env.example` contains **very detailed novice instructions** (exact callback URL, how to generate `AUTH_SECRET`, which scopes to request in the X portal, etc.).
 
 Required vars for Sprint 0:
 - `NEXT_PUBLIC_SUPABASE_URL`

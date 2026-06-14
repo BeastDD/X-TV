@@ -1,13 +1,398 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
-  background-color: #000;
+/* Tailwind v4 theme extensions (neon colors from previous config) */
+@theme {
+  --color-neon-purple: #a855f7;
+  --color-neon-cyan: #22d3ee;
+  --color-neon-magenta: #ec4899;
+  --color-neon-red: #ef4444;
+  --color-neon-orange: #f97316;
+  --color-neon-yellow: #eab308;
+  --color-neon-green: #22c55e;
+  --color-neon-blue: #3b82f6;
 }
 
-/* Neon rainbow accents */
-.neon-rainbow {
-  border-image: linear-gradient(to right, #ff00ff, #00ffff, #ffff00, #ff0000) 1;
-  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+/* shadcn/ui neutral theme variables (cssVariables: true, baseColor: "neutral")
+   Required for Button, Card, Badge and all semantic classes (bg-primary, bg-card, --card-spacing, ring-ring, etc.)
+   Dark cinematic base to match the black + neon aesthetic in the reference screenshots.
+*/
+:root {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.9%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.9%;
+}
+
+/* Obsidian Neon TV - Premium Glassmorphic + Rainbow Glow (matching reference mocks)
+   CUSTOM STYLES FOR SCREENSHOTS - DO NOT REMOVE OR BREAK THESE.
+   These provide the exact glass panel (image 1), TV neon glow frame, custom pill controls,
+   progress, channel list, etc.
+*/
+:root {
+  --neon-purple: #a855f7;
+  --neon-cyan: #22d3ee;
+  --neon-magenta: #ec4899;
+  --neon-red: #ef4444;
+  --neon-orange: #f97316;
+  --neon-yellow: #eab308;
+  --neon-green: #22c55e;
+  --neon-blue: #3b82f6;
+}
+
+body {
+  background: #000;
+  color: white;
+  font-family: 'Geist Sans', system-ui, sans-serif;
+}
+
+/* Glassmorphism + Rainbow Border Panel (Image 1 style) - ELEVATED with better depth and material */
+.rainbow-glass {
+  background: rgba(8, 8, 12, 0.82);
+  backdrop-filter: blur(24px) saturate(1.1);
+  border-radius: 22px;
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 
+    /* Subtle inner depth for glass */
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 -1px 0 rgba(0,0,0,0.4),
+    /* Soft outer lift */
+    0 10px 30px -10px rgb(0 0 0 / 0.6),
+    0 30px 60px -15px rgb(0 0 0 / 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.rainbow-glass::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(120deg, 
+    #a855f7 0%, #22d3ee 18%, #3b82f6 32%, #22c55e 48%, #eab308 62%, #f97316 78%, #ef4444 92%, #ec4899 100%);
+  background-size: 280% 280%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: rainbow-rotate 7s linear infinite;
+  z-index: -1;
+  opacity: 0.95;
+}
+
+@keyframes rainbow-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 280% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* TV Frame with strong multi-color neon glow (Image 2 style) - ELEVATED for photo-realistic halo/backlight */
+.tv-frame {
+  position: relative;
+  border-radius: 12px; /* closer to typical modern TV bezel radius */
+  background: #0a0a0a;
+  /* Strong, vibrant, multi-directional neon halo to simulate real RGB backlight bleeding into the "room" */
+  box-shadow: 
+    /* Very close dark bezel/inner frame */
+    0 0 0 8px #111111,
+    0 0 0 14px #1f1f1f,
+    /* Intense outer glow layers - left/red-orange heavy */
+    -60px 10px 120px -20px #ef4444,
+    -35px 5px 90px -10px #f97316,
+    /* Mid yellow-green */
+    -10px 0 80px 5px #eab308,
+     5px 0 70px 0 #22c55e,
+    /* Right cyan-blue-purple heavy for the beautiful bleed in the photo */
+     45px -5px 110px -5px #22d3ee,
+     70px 0 140px -15px #3b82f6,
+     35px -25px 100px -10px #a855f7,
+    -25px 25px 100px -10px #ec4899,
+    /* Additional soft wide ambient for photo-like halo */
+    0 0 160px 10px rgba(236, 72, 153, 0.25),
+    0 0 200px 30px rgba(59, 130, 246, 0.15);
+  overflow: hidden;
+  /* Subtle inner highlight for screen depth */
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Additional pseudo for bezel + outer ambient glow (makes the "TV on wall" pop like the reference photo) */
+.tv-frame::before {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.35), 
+    rgba(249, 115, 22, 0.25), 
+    rgba(234, 179, 8, 0.2), 
+    rgba(34, 197, 94, 0.25), 
+    rgba(34, 211, 238, 0.3), 
+    rgba(59, 130, 246, 0.35), 
+    rgba(168, 85, 247, 0.3), 
+    rgba(236, 72, 153, 0.25));
+  filter: blur(28px);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.tv-frame::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, 
+    #ef4444, #f97316, #eab308, #22c55e, #22d3ee, #3b82f6, #a855f7, #ec4899);
+  background-size: 220% 100%;
+  opacity: 0.18;
+  z-index: 1;
+  pointer-events: none;
+  animation: neon-flow 5.5s linear infinite;
+}
+
+@keyframes neon-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 220% 50%; }
+}
+
+/* Channel sidebar (matches dark list in mocks) - refined for premium feel of Image 1 */
+.channel-sidebar {
+  background: #08080c;
+  border-right: 1px solid rgba(255,255,255,0.04);
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 13px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: #a1a1aa;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  letter-spacing: -0.1px;
+}
+
+.channel-item:hover {
+  background: rgba(255,255,255,0.04);
+  color: #e4e4e7;
+}
+
+.channel-item.active {
+  background: rgba(255,255,255,0.07);
+  color: white;
+  font-weight: 500;
+}
+
+.channel-item .icon {
+  width: 17px;
+  height: 17px;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+/* Blurred thumbnail mosaic for landing preview (Image 1) - ELEVATED for more convincing cinematic video wall */
+.thumbnail-mosaic {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  padding: 6px;
+  background: #050505;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+}
+
+.thumbnail-mosaic > div {
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+  border-radius: 3px;
+  opacity: 0.55;
+  filter: blur(2.5px) saturate(0.65) contrast(0.9);
+  position: relative;
+}
+
+/* Add subtle "video frame" feel to some tiles */
+.thumbnail-mosaic > div:nth-child(3n) {
+  opacity: 0.65;
+  filter: blur(1.8px) saturate(0.8);
+}
+
+.thumbnail-mosaic > div::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(0,0,0,0.25) 100%
+  );
+  border-radius: 3px;
+}
+
+/* Glass control overlay (Image 1 center floating panel) - more material depth */
+.glass-controls {
+  background: rgba(18, 18, 24, 0.72);
+  backdrop-filter: blur(22px) saturate(1.15);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 
+    0 8px 25px -8px rgb(0 0 0 / 0.6),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Custom player control bar (Image 2 bottom) - ELEVATED for closer tactility and gradient match */
+.player-controls {
+  background: rgba(12, 12, 15, 0.94);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.progress-bar {
+  height: 3.5px;
+  background: #222;
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.progress-bar .progress {
+  height: 100%;
+  background: linear-gradient(to right, #f97316, #ef4444, #c026ff, #22d3ee);
+  border-radius: 9999px;
+  position: relative;
+  transition: width 80ms linear;
+}
+
+.progress-bar .progress::after {
+  content: '';
+  position: absolute;
+  right: -4.5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 11px;
+  height: 11px;
+  background: white;
+  border-radius: 9999px;
+  box-shadow: 
+    0 0 0 2.5px rgba(0,0,0,0.5),
+    0 0 0 4px rgba(59, 130, 246, 0.25);
+}
+
+/* Pill control buttons - refined shapes, depth, and gradients to better match the photo */
+.control-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #3f3f46, #27272a);
+  color: #e4e4e7;
+  border-radius: 9999px;
+  padding: 7px 15px;
+  font-size: 12px;
+  line-height: 1;
+  transition: all 80ms cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.control-pill:hover {
+  background: linear-gradient(160deg, #52525b, #3f3f46);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 3px 6px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.control-pill.play {
+  background: linear-gradient(155deg, #c026ff, #7e22ce);
+  color: white;
+  padding: 9px 20px;
+  box-shadow: 
+    0 2px 8px rgba(192, 38, 255, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.control-pill:active {
+  transform: scale(0.94);
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.4),
+    inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Channel name pill (top of TV) */
+.channel-pill {
+  background: linear-gradient(90deg, #166534, #4ade80);
+  color: #052e16;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 4px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+}
+
+/* Large decorative number like the "33" in mock */
+.big-number {
+  font-size: 120px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* General video area */
+.tv-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
 }
